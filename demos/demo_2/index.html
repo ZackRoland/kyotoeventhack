@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community — Kyoto Tech Meetup</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest: #1E4D3B;
+      --forest-light: #E1F5EE;
+      --green-mid: #1D9E75;
+      --white: #fff;
+      --gray-50: #F9F9F8;
+      --gray-100: #F1EFE8;
+      --gray-200: #D3D1C7;
+      --gray-400: #888780;
+      --gray-500: #5F5E5A;
+      --gray-700: #444441;
+      --border: rgba(0,0,0,0.09);
+      --border-strong: rgba(0,0,0,0.16);
+      --radius: 8px;
+      --radius-lg: 14px;
+      --radius-xl: 16px;
+
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #111;
+      background: var(--white);
+    }
+
+    .container { max-width: 1040px; margin: 0 auto; padding: 0 1.75rem; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 0.5px solid var(--border);
+      z-index: 100;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #111;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13.5px;
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: #111; }
+    .nav-links a.active { color: #111; font-weight: 500; }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .btn-ghost {
+      font-size: 12px;
+      padding: 5px 12px;
+      border: 0.5px solid var(--border-strong);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--gray-500);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-ghost:hover { background: var(--gray-100); }
+    .btn-forest {
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: var(--radius);
+      background: var(--forest);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn-forest:hover { opacity: 0.85; }
+
+    /* ── Page ── */
+    main { padding-bottom: 4rem; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 3.5rem 0 3rem;
+      border-bottom: 0.5px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 1.1rem;
+    }
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green-mid);
+      flex-shrink: 0;
+    }
+    .hero h1 {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      max-width: 580px;
+      margin-bottom: 1.1rem;
+      color: #111;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--forest);
+    }
+    .hero-sub {
+      font-size: 15.5px;
+      color: var(--gray-500);
+      max-width: 500px;
+      line-height: 1.65;
+      margin-bottom: 1.75rem;
+    }
+    .hero-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-primary {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      background: var(--forest);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: 0.87; }
+    .btn-secondary {
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      border: 0.5px solid var(--border-strong);
+      background: transparent;
+      color: #111;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: var(--gray-100); }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 0.5px solid var(--border);
+    }
+    .stat-num {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #111;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 2px;
+    }
+
+    /* ── Sections ── */
+    .section { margin-bottom: 3rem; }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: .4rem;
+      color: #111;
+    }
+    .section-sub {
+      font-size: 14px;
+      color: var(--gray-500);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      max-width: 500px;
+    }
+
+    /* ── Values ── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .value-card {
+      background: var(--gray-50);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem 1.25rem;
+      transition: border-color .15s;
+    }
+    .value-card:hover { border-color: var(--border-strong); }
+    .value-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 1rem;
+    }
+    .icon-green  { background: #E1F5EE; }
+    .icon-amber  { background: #FAEEDA; }
+    .icon-purple { background: #EEEDFE; }
+    .value-card h3 {
+      font-size: 14.5px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+      color: #111;
+    }
+    .value-card p {
+      font-size: 13px;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+    .value-jp {
+      font-size: 11.5px;
+      color: var(--gray-400);
+      margin-top: 8px;
+    }
+
+    /* ── Personas ── */
+    .personas-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1rem;
+    }
+    .personas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .persona {
+      background: var(--gray-50);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1rem;
+      text-align: center;
+      transition: border-color .15s;
+    }
+    .persona:hover { border-color: var(--border-strong); }
+    .persona-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      margin: 0 auto .7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .av-teal   { background: #E1F5EE; color: #085041; }
+    .av-amber  { background: #FAEEDA; color: #633806; }
+    .av-purple { background: #EEEDFE; color: #3C3489; }
+    .av-coral  { background: #FAECE7; color: #712B13; }
+    .persona-name {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 2px;
+      color: #111;
+    }
+    .persona-role {
+      font-size: 11.5px;
+      color: var(--gray-400);
+    }
+    .persona-badge {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+    .badge-teal   { background: #E1F5EE; color: #085041; }
+    .badge-amber  { background: #FAEEDA; color: #633806; }
+    .badge-purple { background: #EEEDFE; color: #3C3489; }
+    .badge-coral  { background: #FAECE7; color: #712B13; }
+
+    /* ── Quotes ── */
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .quote-card {
+      background: var(--gray-50);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.25rem;
+      transition: border-color .15s;
+    }
+    .quote-card:hover { border-color: var(--border-strong); }
+    .quote-text {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #111;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    .quote-author { display: flex; align-items: center; gap: 9px; }
+    .quote-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .quote-meta p  { font-size: 12.5px; font-weight: 500; color: #111; margin: 0; }
+    .quote-meta span { font-size: 11.5px; color: var(--gray-400); }
+
+    /* ── FAQ ── */
+    .faq { border-top: 0.5px solid var(--border); }
+    .faq-item {
+      border-bottom: 0.5px solid var(--border);
+      padding: 1.1rem 0;
+    }
+    .faq-q {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      gap: 1rem;
+    }
+    .faq-toggle {
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--gray-400);
+      line-height: 1;
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 13.5px;
+      color: var(--gray-500);
+      line-height: 1.7;
+      padding-top: .7rem;
+      max-width: 600px;
+      display: none;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── CTA strip ── */
+    .cta-strip {
+      background: var(--forest);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .cta-strip h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: .3rem;
+    }
+    .cta-strip p {
+      font-size: 13.5px;
+      color: rgba(255,255,255,.6);
+      line-height: 1.5;
+    }
+    .cta-actions { display: flex; gap: 10px; flex-shrink: 0; }
+    .btn-white {
+      font-size: 13.5px;
+      font-weight: 500;
+      padding: 9px 22px;
+      border-radius: var(--radius);
+      background: var(--white);
+      color: var(--forest);
+      border: none;
+      cursor: pointer;
+      transition: opacity .15s;
+      white-space: nowrap;
+    }
+    .btn-white:hover { opacity: 0.9; }
+    .btn-outline-white {
+      font-size: 13.5px;
+      padding: 9px 20px;
+      border-radius: var(--radius);
+      background: transparent;
+      color: rgba(255,255,255,.8);
+      border: 0.5px solid rgba(255,255,255,.3);
+      cursor: pointer;
+      transition: border-color .15s;
+      white-space: nowrap;
+    }
+    .btn-outline-white:hover { border-color: rgba(255,255,255,.6); }
+
+    /* ── Responsive ── */
+    @media (max-width: 760px) {
+      .hero h1 { font-size: 28px; }
+      .values-grid { grid-template-columns: 1fr; }
+      .personas-grid { grid-template-columns: repeat(2, 1fr); }
+      .quotes-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .cta-strip { flex-direction: column; align-items: flex-start; }
+      .hero-stats { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">Kyoto Tech Meetup</a>
+    <ul class="nav-links">
+      <li><a href="#" class="active">About us</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Community feed</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-ghost">English / 日本語</button>
+      <button class="btn-forest">Join us</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> Kyoto, Japan — open to everyone</div>
+      <h1>Tech is better when <em>everyone's</em> at the table</h1>
+      <p class="hero-sub">We're a meetup for developers, designers, students, and curious locals in Kyoto. No experience required. No gatekeeping. Just people building things and learning together — in English and Japanese.</p>
+      <div class="hero-actions">
+        <button class="btn-primary">Come to an event</button>
+        <button class="btn-secondary">Learn more</button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">340+</div>
+          <div class="stat-label">community members</div>
+        </div>
+        <div>
+          <div class="stat-num">12</div>
+          <div class="stat-label">nationalities represented</div>
+        </div>
+        <div>
+          <div class="stat-num">3 yrs</div>
+          <div class="stat-label">running in Kyoto</div>
+        </div>
+        <div>
+          <div class="stat-num">English & 日本語</div>
+          <div class="stat-label">both languages welcome</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="section">
+      <div class="section-eyebrow">Our values</div>
+      <div class="section-title">What we stand for</div>
+      <p class="section-sub">Three things that shape every event we run — we take them seriously.</p>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon icon-green">🤝</div>
+          <h3>Local roots</h3>
+          <p>We're built around Kyoto — the city, the community, the neighborhood coffee shops. We want to connect people who live and work here, not just passing through.</p>
+          <div class="value-jp">地域とつながる</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon icon-amber">🌐</div>
+          <h3>Open to all</h3>
+          <p>Career changers, students, senior engineers, non-coders, expats, and lifelong Kyotoites. You don't need a GitHub profile or a job title to belong here.</p>
+          <div class="value-jp">誰でも歓迎</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon icon-purple">💬</div>
+          <h3>Genuinely welcoming</h3>
+          <p>We set the tone intentionally. Events are relaxed, conversations are honest, and nobody should feel like they have to prove themselves to fit in.</p>
+          <div class="value-jp">温かいコミュニティ</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personas -->
+    <section class="section">
+      <div class="personas-label">Who comes to our events</div>
+      <div class="personas-grid">
+        <div class="persona">
+          <div class="persona-avatar av-teal">YT</div>
+          <div class="persona-name">Yuki T.</div>
+          <div class="persona-role">CS student, Kyoto Univ</div>
+          <span class="persona-badge badge-teal">First-timer</span>
+        </div>
+        <div class="persona">
+          <div class="persona-avatar av-amber">SR</div>
+          <div class="persona-name">Sarah R.</div>
+          <div class="persona-role">Expat, career changer</div>
+          <span class="persona-badge badge-amber">New to code</span>
+        </div>
+        <div class="persona">
+          <div class="persona-avatar av-purple">KN</div>
+          <div class="persona-name">Kenji N.</div>
+          <div class="persona-role">Freelance developer</div>
+          <span class="persona-badge badge-purple">Regular</span>
+        </div>
+        <div class="persona">
+          <div class="persona-avatar av-coral">MI</div>
+          <div class="persona-name">Marie I.</div>
+          <div class="persona-role">Local business owner</div>
+          <span class="persona-badge badge-coral">Curious local</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quotes -->
+    <section class="section">
+      <div class="section-eyebrow">From the community</div>
+      <div class="section-title">What people say</div>
+      <p class="section-sub">Real quotes from people who've shown up.</p>
+      <div class="quotes-grid">
+        <div class="quote-card">
+          <p class="quote-text">"I came alone not knowing anyone and left with three people I'm still working on a side project with. That doesn't usually happen."</p>
+          <div class="quote-author">
+            <div class="quote-avatar av-teal">AT</div>
+            <div class="quote-meta">
+              <p>Aiko T.</p>
+              <span>Software engineer · attended Hack Day</span>
+            </div>
+          </div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">"My Japanese isn't great and my code is worse. Nobody cared about either. Best tech event I've been to in Japan."</p>
+          <div class="quote-author">
+            <div class="quote-avatar av-amber">BM</div>
+            <div class="quote-meta">
+              <p>Ben M.</p>
+              <span>Expat · regular at Tech and Coffee</span>
+            </div>
+          </div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">"私はエンジニアではないのに、こんなに楽しめるとは思いませんでした。誰も難しい話ばかりしないので、居心地がよかったです。"</p>
+          <div class="quote-author">
+            <div class="quote-avatar av-purple">MH</div>
+            <div class="quote-meta">
+              <p>Mika H.</p>
+              <span>デザイナー · 初参加</span>
+            </div>
+          </div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-text">"I've tried a lot of Tokyo meetups. This one in Kyoto is smaller and ten times warmer. I make the trip for it now."</p>
+          <div class="quote-author">
+            <div class="quote-avatar av-coral">RK</div>
+            <div class="quote-meta">
+              <p>Ryo K.</p>
+              <span>Backend developer · travels from Osaka</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="section-eyebrow">Common questions</div>
+      <div class="section-title">Before you come</div>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-q">
+            Do I need to know how to code?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-a">Not at all. Designers, product people, students, and people who are just curious about tech are a regular part of our crowd. You'll have plenty to talk about.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            What language are events in?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-a">Both English and Japanese. Most conversations are bilingual and we try to make sure nobody feels left out. If you speak one language, you'll be fine.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Is it okay to come alone?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-a">That's how most people come the first time. We'll introduce you around — it's part of what we do.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Is there a membership fee?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-a">No membership. Most events are free. Occasionally a venue or workshop has a small fee — it's always listed clearly on the event page.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            I'm not fluent in Japanese. Will I be lost?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-a">Not at all. A good chunk of our community are expats or internationals based in Kyoto, and events naturally mix languages. You'll find plenty of English conversations.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            How do I stay in the loop between events?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-a">Join our Discord — that's where most between-event conversation happens. We also post updates on Meetup and occasionally on the community feed here.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-strip">
+      <div>
+        <h2>Come see for yourself</h2>
+        <p>Next event is this Saturday. No RSVP required — just show up.</p>
+      </div>
+      <div class="cta-actions">
+        <button class="btn-outline-white">See the calendar</button>
+        <button class="btn-white">Join the community</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(function(q) {
+    q.addEventListener('click', function() {
+      var item = q.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>
